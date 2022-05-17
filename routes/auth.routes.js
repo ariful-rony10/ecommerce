@@ -1,0 +1,21 @@
+/**
+ * Name: Auth Routes
+ * Description:
+ */
+
+// Dependencies
+const express = require('express'); // express
+const authController = require('../controllers/auth.controller'); // authController 
+
+
+// Creating router function from express
+const router = express.Router();
+
+//! Sign Up GET route
+router.get('/signup', authController.getSignUp)
+
+//! Login GET route
+router.get('/login', authController.getLogIn)
+
+// Export Router
+module.exports = router;
