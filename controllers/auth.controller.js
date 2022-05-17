@@ -3,10 +3,10 @@
  * Description:
  */
 
-function getSignUp(req, res) {
-    
+function getSignup(req, res) {
+    res.render('customer/auth/signup');
 }
-function getLogIn(req, res) {
+function getLogin(req, res) {
 
 }
 
@@ -14,6 +14,6 @@ function getLogIn(req, res) {
 // exports auth controller functions as an object
 
 module.exports = {
-    getSignUp: getSignUp,
-    getLogIn: getLogIn
+    getSignup: getSignup,
+    getLogin: getLogin
 }

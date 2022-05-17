@@ -12,10 +12,10 @@ const authController = require('../controllers/auth.controller'); // authControl
 const router = express.Router();
 
 //! Sign Up GET route
-router.get('/signup', authController.getSignUp)
+router.get('/signup', authController.getSignup);
 
 //! Login GET route
-router.get('/login', authController.getLogIn)
+router.get('/login', authController.getLogin);
 
 // Export Router
 module.exports = router;
