@@ -14,6 +14,7 @@ Views:
 Dependencies:
 1. express
 2. ejs
+3. mongodb
 
 Deceloper Dependencies:
 1. nodemon
