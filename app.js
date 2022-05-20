@@ -1,16 +1,18 @@
-// Dependencies
+//! Dependencies
 const express = require('express'); // express
 const authRoutes = require('./routes/auth.routes'); // auth routes
 const db = require('./database/database');
+
 // Creating express function
 const app = express();
 
 const ejs = require('ejs'); // ejs
 const path = require('path'); // build in path
 
-// Middleware
+//! Middleware
 app.use(authRoutes); // auth route
 app.use(express.static('public')); // use public folder for static files
+app.use(express.urlencoded({extended: false})) // to recognize incoming request object
 
 // SET function
 app.set('view engine', 'ejs'); // set view engine to ejs
