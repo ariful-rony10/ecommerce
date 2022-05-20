@@ -19,13 +19,13 @@ async function signup(req, res) {
     req.body.postal,
     req.body.city
   );
-//   Calling signup method from user model
+  //   Calling signup method from user model
   await user.singup();
 
   res.redirect('/login');
 }
 function getLogin(req, res) {
-    res.render('customer/auth/login')
+  res.render('customer/auth/login');
 }
 
 // exports auth controller functions as an object

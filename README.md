@@ -12,12 +12,14 @@ Views:
 - [] 
 
 Dependencies:
-1. express
-2. ejs
-3. mongodb
+1. express (Nodejs framework)
+2. ejs (view engine)
+3. mongodb (no sequel databse)
+4. bcryptjs (for encrypting password)
+5. csurf (protech from csrf attack)
 
 Deceloper Dependencies:
-1. nodemon
+1. nodemon (for live server)
 
 Models=>admin, auth, cart, products
 Views=>
