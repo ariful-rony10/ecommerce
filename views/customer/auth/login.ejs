@@ -1,12 +1,12 @@
 <!-- Import head -->
-<%- include('../includes/head', { pageTitle: 'Signup' }) %>
+<%- include('../../shared/includes/head', { pageTitle: 'Login' }) %>
 <!-- Stylesheet -->
 <link rel="stylesheet" href="/styles/forms.css">    
 <link rel="stylesheet" href="/styles/auth.css">    
 </head>
 
     <body>
-        <%- include('../includes/header.ejs') %>
+        <%- include('../../shared/includes/header.ejs') %>
             <main>
                 <h1>Login</h1>
                 <form action="/login" method="POST">
@@ -34,4 +34,4 @@
             </main>
 
 <!-- Import footer -->
-            <%- include('../includes/footer') %>
+            <%- include('../../shared/includes/footer') %>

@@ -17,6 +17,8 @@ Dependencies:
 3. mongodb (no sequel databse)
 4. bcryptjs (for encrypting password)
 5. csurf (protech from csrf attack)
+6. express-session
+7. connect-mongodb-session
 
 Deceloper Dependencies:
 1. nodemon (for live server)
