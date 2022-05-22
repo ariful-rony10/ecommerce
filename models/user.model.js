@@ -20,6 +20,11 @@ class User {
       city: city,
     };
   }
+
+  getUserWithSameEmail() {
+    return db.getDb().collection('users').findOne({ email: this.email }); // it will return a promise
+  }
+
   //   Declare signup method
   async singup() {
     // Encrupt password
@@ -32,6 +37,10 @@ class User {
       name: this.name,
       address: this.address,
     });
+  }
+  // Check unhashed password with hashed password
+  hasMachingPassword(hashedPassword) {
+    return bcrypt.compare(this.password, hashedPassword); // it will return promise
   }
 }
 
