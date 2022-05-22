@@ -8,24 +8,35 @@ const expressSession = require('express-session');
 
 
 // Importing dependencies
-const authRoutes = require('./routes/auth.routes'); // auth routes
-const productRoutes = require('./routes/products.routes'); // products routes
-const baseRoutes = require('./routes/base.routes'); // base routes
+const createSessionConfig = require('./config/session');
 const db = require('./database/database');
 const addCsrfTokenMiddleware = require('./middlewares/csrf-token');//
 const errorHandlerMiddleware = require('./middlewares/error-handler');
-const createSessionConfig = require('./config/session');
+const checkAuthStatusMiddleware = require('./middlewares/check-auth'); // check auth middleware
+const authRoutes = require('./routes/auth.routes'); // auth routes
+const productRoutes = require('./routes/products.routes'); // products routes
+const baseRoutes = require('./routes/base.routes'); // base routes
 
 
 
 //! Middleware
+
+app.set('view engine', 'ejs'); // set view engine to ejs
+app.set('views', path.join(__dirname, 'views')); // add views to path
+
 app.use(express.static('public')); // use public folder for static files
 app.use(express.urlencoded({ extended: false })); // to recognize incoming request object
 
+
 const sessionConfig = createSessionConfig();
+
+
 app.use(expressSession(sessionConfig)); // do all the session management
 app.use(csrf()); // all incoming req that are not get req will need a csrf token attached.
-app.use(addCsrfTokenMiddleware)
+
+app.use(addCsrfTokenMiddleware) // add csrf token to middlewaares
+
+app.use(checkAuthStatusMiddleware); // check auth
 
 app.use(baseRoutes); // base route
 app.use(authRoutes); // auth route
@@ -33,8 +44,7 @@ app.use(productRoutes); // product route
 
 app.use(errorHandlerMiddleware); // error handler middleware
 // SET function
-app.set('view engine', 'ejs'); // set view engine to ejs
-app.set('views', path.join(__dirname, 'views')); // add views to path
+
 
 // Connect with the database
 db.connectToDatabase()

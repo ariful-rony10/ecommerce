@@ -1,9 +1,9 @@
 <!-- Import head -->
 <%- include('../../shared/includes/head', { pageTitle: 'Signup' }) %>
-<!-- Stylesheet -->
-<link rel="stylesheet" href="/styles/forms.css">    
-<link rel="stylesheet" href="/styles/auth.css">    
-</head>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/styles/forms.css">
+    <link rel="stylesheet" href="/styles/auth.css">
+    </head>
 
     <body>
         <%- include('../../shared/includes/header.ejs') %>
@@ -11,12 +11,11 @@
                 <h1>Create Account</h1>
                 <form action="/signup" method="POST">
                     <!-- CSRF token -->
-                    <input type="hidden" name="_csrf" value="<%= locals.csrfToken %> ">
+                    <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
                     <!-- Email -->
                     <div>
                         <label for="email">E-mail</label>
-                        <input type="email" name="email" id="email" 
-                        required>
+                        <input type="email" name="email" id="email" required>
                     </div>
                     <!-- Confirm Email -->
                     <div>
@@ -59,5 +58,5 @@
                 </form>
             </main>
 
-<!-- Import footer -->
+            <!-- Import footer -->
             <%- include('../../shared/includes/footer') %>
