@@ -3,20 +3,22 @@
  * Description:
  */
 
-// Get Signup
+// Get Signup || /signup
 function getSignup(req, res) {
-  // .....
-  res.render('/')
+  res.render('customer/authentication/signup')
 }
-
-// Get Login
+// 
+function signup(req, res) {
+  
+}
+// Get Login || /login
 function getLogin(req, res) {
-  // .....
-  res.render('/')
+  res.render('customer/authentication/login')
 }
 
 // Export Authentication Controllers
 module.exports = {
   getSignup: getSignup,
-  getLogin: getLogin
+  getLogin: getLogin,
+  signup: signup
 }

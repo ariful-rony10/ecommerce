@@ -11,6 +11,7 @@ const authenticationRoutes = require('./routes/authentication.routes'); // requi
 app.set('view engine', 'ejs'); // set up view engine
 app.set('views', path.join(__dirname, 'views')); // pointing to views / where to find the views
 // Middleware
+app.use(express.static('public')); // statically serve css and scripts
 app.use(authenticationRoutes); // authentication router middleware
 
 app.PORT = process.env.PORT || 3000;

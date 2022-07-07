@@ -11,6 +11,9 @@ const authenticationController = require('../controllers/authentication.controll
 // GET signup page
 authenticationRouter.get('/signup', authenticationController.getSignup);
 
+// POST sign up
+authenticationRouter.post('/signup', authenticationController.signup);
+
 // GET login page
 authenticationRouter.get('/login', authenticationController.getLogin);
 
