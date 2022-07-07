@@ -29,3 +29,6 @@ Controllers=>
 
 
 auth.routes.js contains all the auth related codes.
+
+
+1. first work with authentication
