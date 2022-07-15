@@ -14,8 +14,13 @@ app.set('view engine', 'ejs'); // set up view engine
 app.set('views', path.join(__dirname, 'views')); // pointing to views / where to find the views
 // Middleware
 app.use(express.static('public')); // statically serve css and scripts
+app.use(express.urlencoded({ extended: false })); // handle income data attached to the request
+
+
 app.use(authenticationRoutes); // authentication router middleware
-app.use(express.urlencoded({extended: false})); // handle income data attached to the request
+
+
+
 
 app.PORT = process.env.PORT || 3000;
 // Database
