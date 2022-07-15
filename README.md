@@ -20,7 +20,7 @@ Dependencies:
 6. express-session
 7. connect-mongodb-session
 
-Deceloper Dependencies:
+Developer Dependencies:
 1. nodemon (for live server)
 
 Models=>admin, auth, cart, products
@@ -32,3 +32,4 @@ auth.routes.js contains all the auth related codes.
 
 
 1. first work with authentication
+2. 

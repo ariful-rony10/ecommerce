@@ -12,6 +12,7 @@ class User {
       city: city
     }
   }
+
  async signup() {
     const hashedPassword = await bcrypt.hash(this.password, 12) // encrypting password
 
@@ -23,6 +24,17 @@ class User {
       address: this.address,
     });
   }
+
+  // Get user || check if user email exists or not
+  getUserWithSameEmail() {
+    return db.getDb().collection('users').findOne({ email: this.email });
+  }
+
+  // Compare password 
+  hasMatchingPassword(hashedPassword){
+    return bcrypt.compare(this.password, hashedPassword);
+  }
+
 }
 
 module.exports = User;

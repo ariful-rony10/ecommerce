@@ -10,11 +10,13 @@ const csurf = require('csurf') // require csurf to protect csrf attack
 const expressSession = require('express-session') // required express session
 
 const authenticationRoutes = require('./routes/authentication.routes'); // requiring authentication routes
+const productsRoutes = require('./routes/products.routes'); // requiring products routes
+const baseRoutes = require('./routes/base.routes'); // requiring base routes
 const db = require('./database/database');
 const addCSRFToken = require('./middlewares/csrf-token') ;
 const errorHandlerMiddleware = require('./middlewares/error-handler'); // custom middleware for handling errors
 const createSessionConfig = require('./config/session') // requiring session 
-const sessionConfig = createSessionConfig();
+const sessionConfig = createSessionConfig(); // creating an object of session
 
 
 
@@ -25,20 +27,27 @@ const sessionConfig = createSessionConfig();
 // Templeting engine
 app.set('view engine', 'ejs'); // set up view engine
 app.set('views', path.join(__dirname, 'views')); // pointing to views / where to find the views
-// Middleware
+
+
+
+// ! Middleware
 app.use(express.static('public')); // statically serve css and scripts
 app.use(express.urlencoded({ extended: false })); // handle income data attached to the request
 app.use(expressSession(sessionConfig));
 app.use(csurf()); // execute as a function in middleware
 app.use(addCSRFToken); // it describes generated tokens to all the other middleware and routes
+
+
+
 // Routes Middleware
+app.use(baseRoutes)
 app.use(authenticationRoutes); // authentication router middleware
+app.use(productsRoutes) 
+app.use(errorHandlerMiddleware); // for handling errors
 
-app.use(errorHandlerMiddleware);
 
 
-
-app.PORT = process.env.PORT || 3000;
+app.PORT = process.env.PORT || 3000; // listening port
 // Database
 db.connectToDatabase()
   .then(function () {
