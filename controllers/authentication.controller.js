@@ -4,12 +4,29 @@
  */
 const User = require('../models/user.model');
 const authUtil = require('../util/authentication');
+const validation = require('../util/validation');
 // Get Signup || /signup
 function getSignup(req, res) {
   res.render('customer/authentication/signup');
 }
 //
 async function signup(req, res, next) {
+  // Validation
+  if (
+    !validation.userDetailsAreValid(
+      req.body.email,
+      req.body.password,
+      req.body.fullname,
+      req.body.street,
+      req.body.postalcode,
+      req.body.city
+    ) ||
+    !validation.emailIsConfirmed(req.body.email, req.body['confirm-email']) // "-" is not allowed in js property names
+  ) {
+    res.redirect('/signup');
+    return;
+  }
+
   const user = new User(
     req.body.email,
     req.body.password,
@@ -20,6 +37,12 @@ async function signup(req, res, next) {
   );
 
   try {
+    // Checking user existence
+    const existsAlready = await user.userAlreadyExists();
+    if (existsAlready) {
+      res.redirect('/signup');
+      return;
+    }
     await user.signup();
   } catch (error) {
     next(error);
