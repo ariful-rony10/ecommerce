@@ -8,12 +8,25 @@ const validation = require('../util/validation');
 const sessionFlash = require('../util/session-flash');
 // Get Signup || /signup
 function getSignup(req, res) {
-  res.render('customer/authentication/signup');
+  let sessionData = sessionFlash.getSessionData(req);
+  if (!sessionData) {
+    sessionData = {
+      email: '',
+      confirmEmail: '',
+      password: '',
+      fullname: '',
+      street: '',
+      postal: '',
+      city: '',
+    };
+  }
+  res.render('customer/authentication/signup', { inputData: sessionData });
 }
 //
 async function signup(req, res, next) {
   const enteredData = {
     email: req.body.email,
+    confirmEmail: req.body['confirm-email'],
     password: req.body.password,
     fullname: req.body.fullname,
     street: req.body.street,
@@ -81,7 +94,15 @@ async function signup(req, res, next) {
 }
 // Get Login || /login
 function getLogin(req, res) {
-  res.render('customer/authentication/login');
+  let sessionData = sessionFlash.getSessionData(req);
+
+  if (!sessionData) {
+    sessionData = {
+      email: '',
+      password: '',
+    };
+  }
+  res.render('customer/authentication/login', { inputData : sessionData });
 }
 
 // Logged in a user || /login

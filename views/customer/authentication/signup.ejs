@@ -7,6 +7,12 @@
     <%- include('../../shared/includes/header') %>
       <main>
         <h1>Create New Account</h1>
+        <% if(inputData.errorMessage) {%> 
+          <section class="alert">
+            <h2>Invalid input</h2>
+            <p><%= inputData.errorMessage %></p>
+          </section>
+        <% } %> 
         <form action="/signup" method="POST">
           <!-- CSRF/CSURF -->
           <%- include('../../shared/includes/addcsrf') %> 
@@ -16,6 +22,7 @@
             type="email" 
             name="email" 
             id="email" 
+            value="<%= inputData.email %>"
             required>
           </p>
           <p>
@@ -23,7 +30,9 @@
             <input 
             type="email" 
             name="confirm-email" 
-            id="confirm-email" required>
+            id="confirm-email" 
+            value="<%= inputData.confirmEmail %>"
+            required>
           </p>
           <p>
             <label for="password">Password</label>
@@ -32,6 +41,7 @@
             name="password" 
             id="password" 
             minlength="6" 
+            value="<%= inputData.password %>"
             required>
           </p>
           <hr>
@@ -40,6 +50,7 @@
             <input type="text" 
             name="fullname" 
             id="fullname" 
+            value="<%= inputData.fullname %>"
             required>
           </p>
           <p>
@@ -48,6 +59,7 @@
             type="text" 
             name="street" 
             id="street" 
+            value="<%= inputData.street %>"
             required>
           </p>
           <p>
@@ -58,6 +70,7 @@
             id="postalcode" 
             minlength="4" 
             maxlength="4" 
+            value="<%= inputData.postal %>"
             required>
           </p>
           <p>
@@ -66,6 +79,7 @@
             type="text" 
             name="city" 
             id="city" 
+            value="<%= inputData.city %>"
             required>
           </p>
           <button class="btn">Create Account</button>
