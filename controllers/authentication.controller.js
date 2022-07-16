@@ -5,12 +5,21 @@
 const User = require('../models/user.model');
 const authUtil = require('../util/authentication');
 const validation = require('../util/validation');
+const sessionFlash = require('../util/session-flash');
 // Get Signup || /signup
 function getSignup(req, res) {
   res.render('customer/authentication/signup');
 }
 //
 async function signup(req, res, next) {
+  const enteredData = {
+    email: req.body.email,
+    password: req.body.password,
+    fullname: req.body.fullname,
+    street: req.body.street,
+    postal: req.body.postalcode,
+    city: req.body.city,
+  };
   // Validation
   if (
     !validation.userDetailsAreValid(
@@ -23,7 +32,17 @@ async function signup(req, res, next) {
     ) ||
     !validation.emailIsConfirmed(req.body.email, req.body['confirm-email']) // "-" is not allowed in js property names
   ) {
-    res.redirect('/signup');
+    sessionFlash.flashDataToSession(
+      req,
+      {
+        errorMessage:
+          'Please check your input. Password must be 6 characters long, postal code must be 4 characters long',
+        ...enteredData,
+      },
+      function () {
+        res.redirect('/signup');
+      }
+    );
     return;
   }
 
@@ -40,7 +59,16 @@ async function signup(req, res, next) {
     // Checking user existence
     const existsAlready = await user.userAlreadyExists();
     if (existsAlready) {
-      res.redirect('/signup');
+      sessionFlash.flashDataToSession(
+        req,
+        {
+          errorMessage: 'User exits already! - Try logging in instead.',
+          ...enteredData,
+        },
+        function () {
+          res.redirect('/signup');
+        }
+      );
       return;
     }
     await user.signup();
@@ -56,7 +84,7 @@ function getLogin(req, res) {
   res.render('customer/authentication/login');
 }
 
-// Logged in a user // /login
+// Logged in a user || /login
 async function login(req, res, next) {
   const user = new User(req.body.email, req.body.password);
   let existingUser;
@@ -66,9 +94,16 @@ async function login(req, res, next) {
     next(error);
     return;
   }
-
+  const sessionErrorData = {
+    errorMessage:
+      'Invalid credentials! - Please double check the email and password.',
+    email: user.email,
+    password: user.password,
+  };
   if (!existingUser) {
-    res.redirect('/login');
+    sessionFlash.flashDataToSession(req, sessionErrorData, function () {
+      res.redirect('/login');
+    });
     return;
   }
 
@@ -77,7 +112,9 @@ async function login(req, res, next) {
   );
 
   if (!passwordIsCorrect) {
-    res.redirect('/login');
+    sessionFlash.flashDataToSession(req, sessionErrorData, function () {
+      res.redirect('/login');
+    });
     return;
   }
 
