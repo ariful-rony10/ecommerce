@@ -1,7 +1,6 @@
 /**
  * Name: App (The beginning of the program)!
  * Description:
- * TODO: error occurring here in authentication.controller.js
  */
  const path = require('path'); // builtin path package
 const express = require('express'); // require express
@@ -9,15 +8,18 @@ const app = express(); // creating an object of express
 const csurf = require('csurf') // require csurf to protect csrf attack
 const expressSession = require('express-session') // required express session
 
+
+
+
 const authenticationRoutes = require('./routes/authentication.routes'); // requiring authentication routes
 const productsRoutes = require('./routes/products.routes'); // requiring products routes
 const baseRoutes = require('./routes/base.routes'); // requiring base routes
 const db = require('./database/database');
-const addCSRFToken = require('./middlewares/csrf-token') ;
+const addCSRFTokenMiddleware = require('./middlewares/csrf-token') ;
 const errorHandlerMiddleware = require('./middlewares/error-handler'); // custom middleware for handling errors
 const createSessionConfig = require('./config/session') // requiring session 
 const sessionConfig = createSessionConfig(); // creating an object of session
-
+const checkAuthenticationStatusMiddleware = require('./middlewares/check-authentication')
 
 
 
@@ -35,7 +37,8 @@ app.use(express.static('public')); // statically serve css and scripts
 app.use(express.urlencoded({ extended: false })); // handle income data attached to the request
 app.use(expressSession(sessionConfig));
 app.use(csurf()); // execute as a function in middleware
-app.use(addCSRFToken); // it describes generated tokens to all the other middleware and routes
+app.use(addCSRFTokenMiddleware); // it describes generated tokens to all the other middleware and routes
+app.use(checkAuthenticationStatusMiddleware); // check is user authenticated or not (must be after session config)
 
 
 

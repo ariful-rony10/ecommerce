@@ -5,16 +5,22 @@
 
 // Dependencies
 const express = require('express');
-const authenticationRouter = express.Router();
+const router = express.Router();
 const authenticationController = require('../controllers/authentication.controller');
 
 // GET signup page
-authenticationRouter.get('/signup', authenticationController.getSignup);
+router.get('/signup', authenticationController.getSignup);
 
 // POST sign up
-authenticationRouter.post('/signup', authenticationController.signup);
+router.post('/signup', authenticationController.signup);
 
 // GET login page
-authenticationRouter.get('/login', authenticationController.getLogin);
+router.get('/login', authenticationController.getLogin);
 
-module.exports = authenticationRouter;
+// POST login
+router.post('/login', authenticationController.login);
+
+// POST logout
+router.post('/logout', authenticationController.logout);
+
+module.exports = router;

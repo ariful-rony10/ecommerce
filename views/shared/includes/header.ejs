@@ -2,5 +2,16 @@
   <div class="logo">
     <a href="/">E-Commerce</a>
   </div>
-  <nav></nav>
+  <nav>
+    <ul>
+      <% if(locals.isAuthenticated) { %> 
+        <li>
+          <form action="/logout" method="POST">
+            <%- include('./addcsrf') %> 
+            <button>Logout</button>
+          </form>
+        </li>
+      <% } %> 
+    </ul>
+  </nav>
 </header>

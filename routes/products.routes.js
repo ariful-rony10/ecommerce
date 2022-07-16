@@ -5,11 +5,11 @@
 
 // Dependencies
 const express = require('express');
-const productsRouter = express.Router();
+const router = express.Router();
 
-productsRouter.get('/products', function (req, res) {
+router.get('/products', function (req, res) {
   res.render('customer/products/all-products')
 })
 
 
-module.exports = productsRouter;
+module.exports = router;
